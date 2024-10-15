@@ -13,7 +13,7 @@ Research Write is a comprehensive web application designed to assist researchers
 ## Screenshots
 
 ### Home Page
-![Home Page](screenshots/home.png)
+![Home Page](https://github.com/bnm-AI-dev/AI-Enhanced-Academic-Research-Platfrom/blob/main/static/screesnhots/home.png)
 *Caption: The home page showcasing featured guides and quick access to key features.*
 
 ### Research Paper Writing Guide
