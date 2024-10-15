@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="relative flex size-full min-h-screen flex-col bg-gradient-to-br from-slate-100 to-amber-50 group/design-root overflow-x-hidden" style='font-family: "Crimson Text", Georgia, serif;'>
+  <div class="layout-container flex h-full grow flex-col">
+    <div class="px-4 md:px-40 flex flex-1 justify-center py-5">
+      <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+        <h1 class="text-[#1a202c] text-5xl font-bold leading-tight tracking-tight mb-8 text-center">Economics & Business Journals</h1>
+        
+        <nav class="flex mb-8" aria-label="Breadcrumb">
+          <ol class="inline-flex items-center space-x-1 md:space-x-3">
+            <li class="inline-flex items-center">
+              <a href="/" class="inline-flex items-center text-sm font-medium text-[#49779c] hover:text-[#2094f3]">
+                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                Home
+              </a>
+            </li>
+            <li>
+              <div class="flex items-center">
+                <svg class="w-6 h-6 text-[#49779c]" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                <a href="/academic-journals" class="ml-1 text-sm font-medium text-[#49779c] hover:text-[#2094f3] md:ml-2">Academic Journals</a>
+              </div>
+            </li>
+            <li aria-current="page">
+              <div class="flex items-center">
+                <svg class="w-6 h-6 text-[#49779c]" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                <span class="ml-1 text-sm font-medium text-[#0d151c] md:ml-2">Economics & Business Journals</span>
+              </div>
+            </li>
+          </ol>
+        </nav>
+
+        <div class="mb-8">
+          <div class="flex flex-wrap gap-2">
+            <button class="px-4 py-2 bg-[#8b4513] text-white rounded-md hover:bg-[#6b3611] transition-colors shadow-md">All</button>
+            <button class="px-4 py-2 bg-[#f0e6d2] text-[#4a5568] rounded-md hover:bg-[#e2d8c4] transition-colors shadow-md">Economics</button>
+            <button class="px-4 py-2 bg-[#f0e6d2] text-[#4a5568] rounded-md hover:bg-[#e2d8c4] transition-colors shadow-md">Finance</button>
+            <button class="px-4 py-2 bg-[#f0e6d2] text-[#4a5568] rounded-md hover:bg-[#e2d8c4] transition-colors shadow-md">Management</button>
+            <button class="px-4 py-2 bg-[#f0e6d2] text-[#4a5568] rounded-md hover:bg-[#e2d8c4] transition-colors shadow-md">Marketing</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          {% for journal in journals %}
+          <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-105 border border-[#d2b48c]">
+            <div class="h-40 bg-[#f8fafc] flex items-center justify-center p-4 border-b border-[#d2b48c]">
+              <img src="{{ journal.image }}" alt="{{ journal.title }}" class="max-h-full max-w-full object-contain">
+            </div>
+            <div class="p-6">
+              <h2 class="text-[#0d151c] text-xl font-bold mb-2">{{ journal.title }}</h2>
+              <p class="text-[#49779c] mb-4">Field: {{ journal.field }}</p>
+              <div class="flex items-center justify-between">
+                <span class="text-[#2094f3] font-medium">Impact Factor: {{ journal.impact_factor }}</span>
+                <a href="#" class="text-[#2094f3] font-medium hover:underline">View Journal →</a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="bg-[#f0e6d2] rounded-lg shadow-md p-8 relative overflow-hidden mb-12 border border-[#d2b48c]">
+          <div class="absolute top-0 right-0 bg-[#8b4513] text-white py-2 px-4 rounded-bl-lg font-medium">Featured</div>
+          <h3 class="text-[#1a202c] text-2xl font-semibold mb-4">Submit Your Research</h3>
+          <p class="text-[#4a5568] mb-6">Learn how to prepare and submit your manuscript for publication in top economics and business journals.</p>
+          <a href="#" class="inline-block bg-[#8b4513] text-white font-medium py-3 px-6 rounded-md hover:bg-[#6b3611] transition-all duration-300 hover:shadow-md transform hover:-translate-y-1">Get Started</a>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-8 border border-[#d2b48c]">
+          <h3 class="text-[#1a202c] text-2xl font-semibold mb-4">Economic Impact Analysis Tool</h3>
+          <p class="text-[#4a5568] mb-6">Analyze the impact of your research with our advanced economic impact analysis tool. Track citations, calculate h-index, and visualize your publication network.</p>
+          <button class="bg-[#8b4513] text-white font-medium py-3 px-6 rounded-md hover:bg-[#6b3611] transition-all duration-300 hover:shadow-md">Launch Tool</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Add interactivity for category buttons
+  const categoryButtons = document.querySelectorAll('.mb-8 button');
+  categoryButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      categoryButtons.forEach(btn => btn.classList.remove('bg-[#8b4513]', 'text-white'));
+      categoryButtons.forEach(btn => btn.classList.add('bg-[#f0e6d2]', 'text-[#4a5568]'));
+      button.classList.remove('bg-[#f0e6d2]', 'text-[#4a5568]');
+      button.classList.add('bg-[#8b4513]', 'text-white');
+    });
+  });
+</script>
+{% endblock %}
+
+

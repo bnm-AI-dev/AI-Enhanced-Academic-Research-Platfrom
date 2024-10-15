@@ -1,0 +1,184 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="relative flex size-full min-h-screen flex-col bg-gradient-to-br from-slate-50 to-blue-100 group/design-root overflow-x-hidden" style='font-family: Inter, "Noto Sans", sans-serif;'>
+  <div class="layout-container flex h-full grow flex-col">
+    <div class="px-4 md:px-40 flex flex-1 justify-center py-5">
+      <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+        <nav class="mb-8" aria-label="Breadcrumb">
+          <ol class="flex items-center space-x-2 text-sm">
+            <li><a href="/" class="text-[#49779c] hover:text-[#2094f3] transition-colors">Home</a></li>
+            <li><span class="text-[#49779c] mx-2">/</span></li>
+            <li><a href="{{ url_for('research_tools') }}" class="text-[#49779c] hover:text-[#2094f3] transition-colors">Research Tools</a></li>
+            <li><span class="text-[#49779c] mx-2">/</span></li>
+            <li class="text-[#0d151c] font-medium">Generative AI in Economic Research</li>
+          </ol>
+        </nav>
+
+        <h1 class="text-[#0d151c] text-4xl font-black leading-tight tracking-[-0.033em] mb-8 text-center">Generative AI in Economic Research</h1>
+        
+        <div class="mb-12 bg-white rounded-xl p-8 shadow-md">
+          <div class="flex items-center mb-4">
+            <svg class="w-8 h-8 text-[#2094f3] mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+            </svg>
+            <p class="text-[#49779c] leading-relaxed">
+              Generative AI is transforming the landscape of economic research, offering powerful tools and methodologies that enhance our ability to analyze complex data, generate accurate forecasts, and create sophisticated economic models.
+            </p>
+          </div>
+          <p class="text-[#49779c] leading-relaxed mt-4">
+            Explore the key applications of generative AI in the field of economics below.
+          </p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-[#0d151c] mb-8 text-center">Applications of Generative AI</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          {% for application in applications %}
+          <div class="bg-white rounded-md p-6 transition-all duration-300 hover:bg-blue-50 group border border-gray-200 flex flex-col">
+            <div class="flex items-center mb-4">
+              <div class="bg-blue-100 rounded-full p-2 mr-4 group-hover:bg-blue-200 transition-colors">
+                <svg class="w-6 h-6 text-[#2094f3]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  {{ application.icon | safe }}
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold text-[#0d151c]">{{ application.title }}</h3>
+            </div>
+            <p class="text-[#49779c] mb-4 text-sm flex-grow">{{ application.summary }}</p>
+            <a href="#" onclick="showDetails('{{ application.id }}')" class="text-[#2094f3] font-medium text-sm hover:text-blue-800 transition-colors inline-flex items-center">
+              Learn more
+              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Interactive Section -->
+        <div class="mb-16 bg-white rounded-xl p-8 shadow-md">
+          <h2 class="text-2xl font-bold text-[#0d151c] mb-4">Test Your Knowledge</h2>
+          <p class="text-[#49779c] mb-4">How well do you understand the applications of Generative AI in economic research? Take this quick quiz to find out!</p>
+          <button onclick="startQuiz()" class="bg-[#2094f3] text-white font-medium py-2 px-4 rounded-md hover:bg-blue-700 transition-colors">Start Quiz</button>
+        </div>
+
+        <!-- Application Details Modal -->
+        <div id="applicationModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+          <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
+            <div id="modalContent"></div>
+            <div class="text-right mt-4">
+              <button onclick="closeModal()" class="px-4 py-2 bg-[#2094f3] text-white rounded-md hover:bg-blue-700 transition-colors">Close</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Modal -->
+        <div id="quizModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+          <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
+            <div id="quizContent"></div>
+            <div class="text-right mt-4">
+              <button onclick="closeQuiz()" class="px-4 py-2 bg-[#2094f3] text-white rounded-md hover:bg-blue-700 transition-colors">Close Quiz</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const applications = JSON.parse('{{ applications | tojson | safe }}');
+
+function showDetails(id) {
+  const modal = document.getElementById('applicationModal');
+  const content = document.getElementById('modalContent');
+  const application = applications.find(app => app.id === id);
+  
+  content.innerHTML = `
+    <h2 class="text-2xl font-bold text-[#0d151c] mb-4">${application.title}</h2>
+    <p class="text-[#49779c] mb-4">${application.description}</p>
+    <h3 class="text-xl font-semibold text-[#0d151c] mb-2">Key Features:</h3>
+    <ul class="list-disc list-inside text-[#49779c]">
+      ${application.features.map(feature => `<li>${feature}</li>`).join('')}
+    </ul>
+  `;
+  
+  modal.classList.remove('hidden');
+}
+
+function closeModal() {
+  const modal = document.getElementById('applicationModal');
+  modal.classList.add('hidden');
+}
+
+function startQuiz() {
+  const modal = document.getElementById('quizModal');
+  const content = document.getElementById('quizContent');
+  
+  const questions = [
+    {
+      question: "Which of the following is NOT a common application of Generative AI in economic research?",
+      options: ["Economic Forecasting", "Policy Simulation", "Market Analysis", "Physical Product Manufacturing"],
+      correct: 3
+    },
+    {
+      question: "Generative AI can help in creating multiple economic scenarios. This application is known as:",
+      options: ["Economic Forecasting", "Policy Simulation", "Scenario Planning", "Automated Reporting"],
+      correct: 2
+    },
+    {
+      question: "Which application of Generative AI focuses on predicting potential outcomes of various policy decisions?",
+      options: ["Economic Forecasting", "Policy Simulation", "Market Analysis", "Automated Reporting"],
+      correct: 1
+    }
+  ];
+
+  let quizHTML = `<h2 class="text-2xl font-bold text-[#0d151c] mb-4">Generative AI in Economic Research Quiz</h2>`;
+  
+  questions.forEach((q, index) => {
+    quizHTML += `
+      <div class="mb-6">
+        <p class="text-[#0d151c] font-semibold mb-2">${index + 1}. ${q.question}</p>
+        ${q.options.map((option, i) => `
+          <div class="mb-2">
+            <input type="radio" id="q${index}_${i}" name="q${index}" value="${i}" class="mr-2">
+            <label for="q${index}_${i}" class="text-[#49779c]">${option}</label>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  });
+
+  quizHTML += `<button onclick="checkAnswers()" class="bg-[#2094f3] text-white font-medium py-2 px-4 rounded-md hover:bg-blue-700 transition-colors">Submit Answers</button>`;
+
+  content.innerHTML = quizHTML;
+  modal.classList.remove('hidden');
+}
+
+function checkAnswers() {
+  const questions = document.querySelectorAll('#quizContent > div');
+  let score = 0;
+  
+  questions.forEach((q, index) => {
+    const selectedAnswer = q.querySelector('input:checked');
+    if (selectedAnswer && parseInt(selectedAnswer.value) === [3, 2, 1][index]) {
+      score++;
+      selectedAnswer.parentElement.classList.add('bg-green-100');
+    } else if (selectedAnswer) {
+      selectedAnswer.parentElement.classList.add('bg-red-100');
+    }
+  });
+
+  const resultHTML = `
+    <h3 class="text-xl font-semibold text-[#0d151c] mb-4">Quiz Results</h3>
+    <p class="text-[#49779c] mb-4">You scored ${score} out of ${questions.length}.</p>
+    <button onclick="startQuiz()" class="bg-[#2094f3] text-white font-medium py-2 px-4 rounded-md hover:bg-blue-700 transition-colors">Retake Quiz</button>
+  `;
+
+  document.getElementById('quizContent').insertAdjacentHTML('beforeend', resultHTML);
+}
+
+function closeQuiz() {
+  const modal = document.getElementById('quizModal');
+  modal.classList.add('hidden');
+}
+</script>
+{% endblock %}

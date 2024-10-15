@@ -1,0 +1,118 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="min-h-screen bg-gray-100">
+  <!-- Header with background image -->
+  <div class="relative h-64 bg-cover bg-center" style="background-image: url('path/to/university-background.jpg');">
+    <div class="absolute inset-0 bg-black opacity-50"></div>
+    <div class="absolute bottom-0 left-0 p-6 text-white">
+      <img src="{{ economist.image }}" alt="{{ economist.name }}" class="w-24 h-24 rounded-full border-4 border-white mb-4">
+      <h1 class="text-3xl font-bold">{{ economist.name }}, Ph.D.</h1>
+      <p class="text-xl">{{ economist.title }}</p>
+      <p class="mt-2 text-sm">{{ economist.department }}, {{ economist.university }}</p>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="bg-white shadow">
+    <div class="container mx-auto px-6">
+      <ul class="flex">
+        <li class="mr-6"><a href="#" class="text-blue-500 border-b-2 border-blue-500 py-4 px-2">Home</a></li>
+        <li class="mr-6"><a href="#" class="text-gray-500 hover:text-blue-500 py-4 px-2">Research</a></li>
+        <li class="mr-6"><a href="#" class="text-gray-500 hover:text-blue-500 py-4 px-2">Publications</a></li>
+        <li class="mr-6"><a href="#" class="text-gray-500 hover:text-blue-500 py-4 px-2">Teaching</a></li>
+        <li><a href="#" class="text-gray-500 hover:text-blue-500 py-4 px-2">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <div class="container mx-auto px-6 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Left column -->
+      <div class="md:col-span-1">
+        <!-- Research Interests -->
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+          <h2 class="text-xl font-semibold mb-4">Research Interests</h2>
+          <ul class="list-disc list-inside space-y-2">
+            <li>Macroeconomics</li>
+            <li>Monetary Policy</li>
+            <li>International Trade</li>
+            <li>Economic Development</li>
+            <li>Econometrics</li>
+          </ul>
+        </div>
+
+        <!-- Education -->
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+          <h2 class="text-xl font-semibold mb-4">Education</h2>
+          <ul class="space-y-4">
+            <li>
+              <p class="font-medium">Ph.D. in Economics</p>
+              <p class="text-sm text-gray-600">Harvard University, 2010</p>
+            </li>
+            <li>
+              <p class="font-medium">M.A. in Economics</p>
+              <p class="text-sm text-gray-600">London School of Economics, 2005</p>
+            </li>
+            <li>
+              <p class="font-medium">B.A. in Economics</p>
+              <p class="text-sm text-gray-600">University of California, Berkeley, 2003</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Right column -->
+      <div class="md:col-span-2">
+        <!-- Recent Publications -->
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+          <h2 class="text-xl font-semibold mb-4">Recent Publications</h2>
+          <ul class="space-y-4">
+            <li>
+              <p class="font-medium">"The Impact of Monetary Policy on Global Trade Patterns"</p>
+              <p class="text-sm text-gray-600">Journal of International Economics, 2022</p>
+            </li>
+            <li>
+              <p class="font-medium">"Econometric Analysis of Developing Economies"</p>
+              <p class="text-sm text-gray-600">Quarterly Journal of Economics, 2021</p>
+            </li>
+            <li>
+              <p class="font-medium">"Macroeconomic Implications of Technological Disruption"</p>
+              <p class="text-sm text-gray-600">American Economic Review, 2020</p>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Current Courses -->
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+          <h2 class="text-xl font-semibold mb-4">Current Courses</h2>
+          <ul class="space-y-2">
+            <li>ECON 301: Advanced Macroeconomic Theory</li>
+            <li>ECON 405: International Trade and Finance</li>
+            <li>ECON 510: Graduate Econometrics</li>
+          </ul>
+        </div>
+
+        <!-- Awards and Honors -->
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+          <h2 class="text-xl font-semibold mb-4">Awards and Honors</h2>
+          <ul class="space-y-2">
+            <li>Outstanding Research Award, American Economic Association, 2021</li>
+            <li>Best Paper Award, European Economic Association Conference, 2019</li>
+            <li>Excellence in Teaching Award, University of Example, 2018</li>
+          </ul>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="bg-white rounded-lg shadow p-6">
+          <h2 class="text-xl font-semibold mb-4">Contact Information</h2>
+          <p><strong>Email:</strong> {{ economist.email }}</p>
+          <p><strong>Office:</strong> {{ economist.office }}</p>
+          <p><strong>Phone:</strong> {{ economist.phone }}</p>
+          <p><strong>Office Hours:</strong> {{ economist.office_hours }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

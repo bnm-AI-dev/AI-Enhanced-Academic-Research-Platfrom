@@ -1,0 +1,126 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="feedback-container">
+  <h2>How was your session?</h2>
+  <form action="{{ url_for('feedback') }}" method="post">
+    <div class="emoji-options">
+      <label>
+        <input type="radio" name="feedback" value="Awful">
+        <div class="emoji-wrapper">
+          <span class="emoji">😖</span>
+          <span class="label">Awful</span>
+        </div>
+      </label>
+      <label>
+        <input type="radio" name="feedback" value="Bad">
+        <div class="emoji-wrapper">
+          <span class="emoji">🙁</span>
+          <span class="label">Bad</span>
+        </div>
+      </label>
+      <label>
+        <input type="radio" name="feedback" value="Ok">
+        <div class="emoji-wrapper">
+          <span class="emoji">😐</span>
+          <span class="label">Ok</span>
+        </div>
+      </label>
+      <label>
+        <input type="radio" name="feedback" value="Good">
+        <div class="emoji-wrapper">
+          <span class="emoji">😊</span>
+          <span class="label">Good</span>
+        </div>
+      </label>
+      <label>
+        <input type="radio" name="feedback" value="Great">
+        <div class="emoji-wrapper">
+          <span class="emoji">😍</span>
+          <span class="label">Great</span>
+        </div>
+      </label>
+    </div>
+    <div class="button-container">
+      <button type="submit" class="submit-btn">Submit</button>
+      <button type="button" class="cancel-btn">Cancel</button>
+    </div>
+  </form>
+</div>
+
+<style>
+  .feedback-container {
+    background-color: white;
+    border-radius: 15px;
+    padding: 20px;
+    max-width: 450px;
+    margin: 40px auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .emoji-options {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .emoji-options label {
+    cursor: pointer;
+  }
+  .emoji-options input[type="radio"] {
+    display: none;
+  }
+  .emoji-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+  .emoji {
+    font-size: 2em;
+    margin-bottom: 5px;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+  }
+  .label {
+    font-size: 0.8em;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+  }
+  .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+  }
+  .submit-btn, .cancel-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .submit-btn {
+    background-color: #000;
+    color: white;
+  }
+  .cancel-btn {
+    background-color: #f0f0f0;
+    color: #333;
+  }
+  input[type="radio"]:checked + .emoji-wrapper {
+    background-color: #e0e7ff;
+    border: 2px solid #4f46e5;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+    padding: 15px;  
+  }
+  input[type="radio"]:checked + .emoji-wrapper .emoji,
+  input[type="radio"]:checked + .emoji-wrapper .label {
+    opacity: 1;
+  }
+</style>
+{% endblock %}

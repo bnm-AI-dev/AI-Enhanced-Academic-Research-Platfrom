@@ -1,0 +1,280 @@
+{% extends "layout.html" %}
+{% block content %}
+<main class="min-h-screen bg-gray-50 text-gray-800 font-sans">
+  <div class="max-w-screen-2xl mx-auto px-4 py-8">
+    <nav class="mb-6 text-sm text-gray-500" aria-label="Breadcrumb">
+      <ol class="flex items-center space-x-2">
+        <li><a href="{{ url_for('home') }}" class="hover:text-blue-600 transition-colors">Home</a></li>
+        <li>/</li>
+        <li><a href="{{ url_for('my_library') }}" class="hover:text-blue-600 transition-colors">My Library</a></li>
+        <li>/</li>
+        <li class="font-medium text-gray-700">Edit Paper</li>
+      </ol>
+    </nav>
+
+    <div class="grid grid-cols-1 xl:grid-cols-4 gap-6">
+      <!-- Main Content Area -->
+      <div class="xl:col-span-3">
+        <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+          <input type="text" id="title" name="title" value="{{ paper.title }}" required class="w-full text-2xl font-bold mb-4 bg-transparent border-b border-gray-300 focus:border-blue-500 focus:outline-none transition-colors">
+          
+          <!-- AI Writing Assistant -->
+          <div class="mb-4">
+            <h3 class="font-bold text-lg mb-2">AI Writing Assistant</h3>
+            <div class="flex flex-wrap gap-4">
+              <button class="ai-tool-button flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-blue-600 hover:text-white transition-colors">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                Generate Ideas
+              </button>
+              <button class="ai-tool-button flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-blue-600 hover:text-white transition-colors">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
+                Expand Section
+              </button>
+              <button class="ai-tool-button flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-blue-600 hover:text-white transition-colors">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                Improve Writing
+              </button>
+              <button class="ai-tool-button flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-blue-600 hover:text-white transition-colors">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+                Summarize
+              </button>
+              <button class="ai-tool-button flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-blue-600 hover:text-white transition-colors">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                Fact Check
+              </button>
+            </div>
+            
+          </div>
+
+          <!-- Text Editor -->
+          <div id="editor" class="w-full p-4 bg-white rounded border border-gray-200 focus:border-blue-500 focus:outline-none transition-colors" style="min-height: 500px;">{{ paper.content | safe }}</div>
+          <textarea id="content" name="content" style="display: none;">{{ paper.content }}</textarea>
+          <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+          <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+          <script>
+            var quill = new Quill('#editor', {
+              theme: 'snow',
+              modules: {
+                toolbar: [
+                  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                  ['bold', 'italic', 'underline', 'strike'],
+                  ['blockquote', 'code-block'],
+                  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                  [{ 'script': 'sub'}, { 'script': 'super' }],
+                  [{ 'indent': '-1'}, { 'indent': '+1' }],
+                  [{ 'direction': 'rtl' }],
+                  [{ 'color': [] }, { 'background': [] }],
+                  [{ 'font': [] }],
+                  [{ 'align': [] }],
+                  ['clean']
+                ]
+              }
+            });
+            quill.on('text-change', function() {
+              document.getElementById('content').value = quill.root.innerHTML;
+            });
+          </script>
+        </div>
+
+        <div class="flex justify-between mt-4">
+          <a href="{{ url_for('my_library') }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors">Cancel</a>
+          <button type="submit" id="save-changes" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">Save Changes</button>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="xl:col-span-1">
+        <!-- Progress Widget -->
+        <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+          <h3 class="font-bold text-lg mb-4">Paper Progress</h3>
+          <div class="mb-4">
+            <div class="flex justify-between mb-1">
+              <span class="text-sm font-medium">Overall Completion</span>
+              <span class="text-sm font-medium">{{ paper.progress }}%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5">
+              <div class="bg-blue-600 h-2.5 rounded-full" style="width: {{ paper.progress }}%"></div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="text-center">
+              <div class="text-2xl font-bold">{{ paper.word_count }}</div>
+              <div class="text-sm text-gray-500">Words</div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-bold">{{ paper.time_spent }}</div>
+              <div class="text-sm text-gray-500">Hours Spent</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="xl:col-span-1 space-y-6">
+          <!-- Actions Widget -->
+          <div class="bg-white rounded-xl shadow-sm p-6">
+            <h3 class="font-bold text-lg mb-4">Actions</h3>
+            <div class="space-y-2">
+              <button class="w-full px-4 py-2 bg-blue-100 text-blue-600 rounded-md hover:bg-blue-200 transition-colors flex items-center justify-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                Improve It
+              </button>
+              <button class="w-full px-4 py-2 bg-green-100 text-green-600 rounded-md hover:bg-green-200 transition-colors flex items-center justify-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+                Simplify
+              </button>
+              <button class="w-full px-4 py-2 bg-purple-100 text-purple-600 rounded-md hover:bg-purple-200 transition-colors flex items-center justify-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
+                Paraphrase
+              </button>
+            </div>
+          </div>
+
+        <!-- AI Suggestions Widget -->
+        <div id="ai-suggestions" class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="font-bold text-lg mb-4">AI Suggestions</h3>
+          <div id="ai-suggestions-content" class="h-64 overflow-y-auto bg-gray-50 p-4 rounded-lg">
+            <p class="text-gray-500 italic">Select text and use an AI feature to get suggestions.</p>
+          </div>
+        </div>
+
+        <!-- Grammar Suggestions Widget -->
+        <div id="grammar-suggestions" class="bg-white rounded-xl shadow-sm p-6 mb-6">
+          <h3 class="font-bold text-lg mb-4">Grammar Suggestions</h3>
+          <div id="grammar-suggestions-content" class="h-48 overflow-y-auto">
+            <p class="text-gray-500 italic">Grammar suggestions will appear here as you type.</p>
+          </div>
+        </div>
+
+        <!-- Deadlines Widget -->
+        <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+          <h3 class="font-bold text-lg mb-4">Upcoming Deadlines</h3>
+          <ul class="space-y-2">
+            {% for deadline in paper.deadlines %}
+            <li class="flex justify-between items-center">
+              <span>{{ deadline.title }}</span>
+              <span class="text-sm text-gray-500">{{ deadline.date }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<style>
+.ai-tool-button {
+  @apply flex items-center px-3 py-2 bg-blue-50 text-blue-600 rounded-lg transition-all duration-300 hover:bg-blue-600 hover:text-white text-sm font-medium;
+}
+</style>
+
+<script>
+// ... (Keep the existing JavaScript)
+
+function updateProgress() {
+  const content = document.getElementById('content').value;
+  const wordCount = content.trim().split(/\s+/).length;
+  const progress = Math.min(100, Math.round((wordCount / 1000) * 100)); // Assuming 1000 words is 100%
+  
+  document.querySelector('.bg-blue-600.h-2.5').style.width = `${progress}%`;
+  document.querySelector('.text-sm.font-medium:last-child').textContent = `${progress}%`;
+  document.querySelector('.text-2xl.font-bold').textContent = wordCount;
+}
+
+document.getElementById('content').addEventListener('input', updateProgress);
+
+// Initial update
+updateProgress();
+
+// AI Writing Assistant functionality (simulation)
+document.querySelectorAll('.ai-tool-button').forEach(button => {
+  button.addEventListener('click', function() {
+    const feature = this.id;
+    const selectedText = window.getSelection().toString();
+    const aiSuggestionsContent = document.getElementById('ai-suggestions-content');
+    const contentArea = document.getElementById('content');
+    
+    // Simulated AI responses
+    const aiResponses = {
+      'generate-ideas': [
+        "Consider exploring the economic impact of AI on job markets.",
+        "Analyze the role of AI in improving healthcare outcomes.",
+        "Discuss the ethical implications of AI in decision-making processes."
+      ],
+      'expand-section': [
+        "To expand on this point, you could discuss specific case studies of AI implementation in various industries.",
+        "Consider adding statistical data to support your arguments about AI's impact on productivity.",
+        "You might want to explore potential counterarguments and address them in this section."
+      ],
+      'improve-writing': [
+        "Consider rephrasing this sentence for clarity: '...'",
+        "You could strengthen this argument by adding a specific example.",
+        "This paragraph might benefit from a transition sentence to improve flow."
+      ],
+      'summarize': [
+        "Key points in this section:\n1. AI's impact on productivity\n2. Ethical considerations\n3. Future projections for AI adoption",
+        "This paragraph primarily discusses the challenges of implementing AI in traditional industries.",
+        "The main argument here is that AI will significantly transform the job market in the next decade."
+      ],
+      'fact-check': [
+        "The statistic '...' might need verification. Consider checking recent reports from reputable sources.",
+        "The claim about AI's impact on GDP growth rates should be supported with citations from economic studies.",
+        "The timeline mentioned for widespread AI adoption may need to be updated based on current industry trends."
+      ]
+    };
+    
+    // Clear previous suggestions
+    aiSuggestionsContent.innerHTML = '';
+    
+    // Generate and display new suggestions
+    const suggestions = aiResponses[feature];
+    suggestions.forEach(suggestion => {
+      const suggestionElement = document.createElement('p');
+      suggestionElement.textContent = suggestion;
+      suggestionElement.className = 'mb-2 p-2 bg-blue-50 rounded cursor-pointer hover:bg-blue-100 transition-colors';
+      
+      // Add click event to apply suggestion
+      suggestionElement.addEventListener('click', function() {
+        if (selectedText) {
+          contentArea.value = contentArea.value.replace(selectedText, selectedText + "\n\n" + suggestion);
+        } else {
+          contentArea.value += "\n\n" + suggestion;
+        }
+        updateProgress();
+      });
+      
+      aiSuggestionsContent.appendChild(suggestionElement);
+    });
+  });
+});
+
+// Simulated grammar checking
+document.getElementById('content').addEventListener('input', function() {
+  const grammarSuggestionsContent = document.getElementById('grammar-suggestions-content');
+  const text = this.value;
+  
+  // Simple grammar check simulation
+  const grammarIssues = [
+    { issue: "Consider using 'their' instead of 'there'", found: text.includes('there') },
+    { issue: "Check for proper capitalization at the beginning of sentences", found: /\.\s[a-z]/.test(text) },
+    { issue: "Ensure correct use of 'its' and 'it's'", found: text.includes("it's") || text.includes("its") },
+    { issue: "Watch for run-on sentences", found: text.split('.').some(sentence => sentence.length > 100) }
+  ];
+  
+  grammarSuggestionsContent.innerHTML = '';
+  
+  grammarIssues.forEach(issue => {
+    if (issue.found) {
+      const issueElement = document.createElement('p');
+      issueElement.textContent = issue.issue;
+      issueElement.className = 'mb-2 p-2 bg-yellow-50 rounded';
+      grammarSuggestionsContent.appendChild(issueElement);
+    }
+  });
+  
+  if (grammarSuggestionsContent.children.length === 0) {
+    grammarSuggestionsContent.innerHTML = '<p class="text-gray-500 italic">No grammar issues detected.</p>';
+  }
+});
+</script>
+{% endblock %}

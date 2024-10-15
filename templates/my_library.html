@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="relative flex size-full min-h-screen flex-col bg-gradient-to-br from-slate-50 to-blue-100 group/design-root overflow-x-hidden" style='font-family: Inter, "Noto Sans", sans-serif;'>
+  <div class="layout-container flex h-full grow flex-col">
+    <div class="px-4 md:px-40 flex flex-1 justify-center py-5">
+      <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+        <!-- Add breadcrumb here -->
+        <nav class="flex mb-8" aria-label="Breadcrumb">
+          <ol class="inline-flex items-center space-x-1 md:space-x-3">
+            <li class="inline-flex items-center">
+              <a href="{{ url_for('home') }}" class="inline-flex items-center text-sm font-medium text-[#49779c] hover:text-[#2094f3]">
+                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                Home
+              </a>
+            </li>
+            <li>
+              <div class="flex items-center">
+                <svg class="w-6 h-6 text-[#49779c]" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                <a href="{{ url_for('my_library') }}" class="ml-1 text-sm font-medium text-[#49779c] hover:text-[#2094f3] md:ml-2">My Library</a>
+              </div>
+            </li>
+            <li aria-current="page">
+              <div class="flex items-center">
+                <svg class="w-6 h-6 text-[#49779c]" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                <span class="ml-1 text-sm font-medium text-[#0d151c] md:ml-2">Papers & Drafts</span>
+              </div>
+            </li>
+          </ol>
+        </nav>
+        
+        <h1 class="text-[#0d151c] text-4xl font-black leading-tight tracking-[-0.033em] mb-8 text-center">My Library</h1>
+        
+        <div class="mb-8 relative">
+          <input
+            type="text"
+            placeholder="Search your library..."
+            class="w-full px-4 py-3 rounded-xl border border-[#cedde8] focus:outline-none focus:ring-2 focus:ring-[#2094f3] pl-12 transition-all duration-300 hover:shadow-md"
+          />
+          <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#49779c]" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+
+        <div class="flex justify-between mb-6">
+          <h2 class="text-[#0d151c] text-2xl font-bold">My Papers</h2>
+          <button class="bg-[#2094f3] text-white font-medium py-2 px-4 rounded-lg hover:bg-[#1a75c2] transition-colors">
+            + New Paper
+          </button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+          {% for paper in papers %}
+          <div class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer group">
+            <h3 class="text-[#0d151c] text-xl font-bold mb-2">{{ paper.title }}</h3>
+            <p class="text-[#49779c] mb-4">{{ paper.description }}</p>
+            <div class="flex justify-between items-center">
+              <span class="text-[#49779c] text-sm">Last edited: {{ paper.last_edited }}</span>
+              <a href="{{ url_for('edit_paper', paper_id=loop.index) }}" class="text-[#2094f3] font-medium hover:underline group-hover:text-[#1a75c2] transition-colors">Edit →</a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="flex justify-between mb-6">
+          <h2 class="text-[#0d151c] text-2xl font-bold">My Drafts</h2>
+          <button class="bg-[#2094f3] text-white font-medium py-2 px-4 rounded-lg hover:bg-[#1a75c2] transition-colors">
+            + New Draft
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+          {% for draft in drafts %}
+          <div class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer group">
+            <h3 class="text-[#0d151c] text-xl font-bold mb-2">{{ draft.title }}</h3>
+            <p class="text-[#49779c] mb-4">{{ draft.description }}</p>
+            <div class="flex justify-between items-center">
+              <span class="text-[#49779c] text-sm">Last edited: {{ draft.last_edited }}</span>
+              <a href="#" class="text-[#2094f3] font-medium hover:underline group-hover:text-[#1a75c2] transition-colors">Continue →</a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg p-8 relative overflow-hidden mb-12">
+          <div class="absolute top-0 right-0 bg-[#2094f3] text-white py-2 px-4 rounded-bl-xl font-medium">Featured</div>
+          <h3 class="text-[#0d151c] text-2xl font-bold mb-4">Research Paper Template</h3>
+          <p class="text-[#49779c] mb-6">Start your next research paper with our professionally designed template. It includes proper formatting, citation guidelines, and section suggestions to help you get started quickly.</p>
+          <a href="#" class="inline-block bg-[#2094f3] text-white font-medium py-3 px-6 rounded-lg hover:bg-[#1a75c2] transition-all duration-300 hover:shadow-md transform hover:-translate-y-1">Use Template</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Add any necessary JavaScript for interactivity
+</script>
+{% endblock %}

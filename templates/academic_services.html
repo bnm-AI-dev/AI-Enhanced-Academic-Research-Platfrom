@@ -1,0 +1,269 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="relative flex size-full min-h-screen flex-col bg-gradient-to-br from-slate-50 to-blue-100 group/design-root overflow-x-hidden" style='font-family: Inter, "Noto Sans", sans-serif;'>
+  <div class="layout-container flex h-full grow flex-col">
+    <div class="px-4 md:px-40 flex flex-1 justify-center py-5">
+      <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+        <h1 class="text-[#0d151c] text-4xl font-black leading-tight tracking-[-0.033em] mb-8 text-center">Academic Services Hub</h1>
+        
+        <div class="mb-8 relative z-30">
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Discover economists, topics, or resources..."
+            class="w-full px-4 py-3 rounded-xl border border-[#cedde8] focus:outline-none focus:ring-2 focus:ring-[#2094f3] pl-12 transition-all duration-300 hover:shadow-md"
+          />
+          <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#49779c]" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <div id="search-suggestions" class="absolute z-40 w-full bg-white rounded-xl shadow-md mt-1 hidden"></div>
+        </div>
+
+        <section id="topics" class="mb-12 bg-white rounded-xl p-8 shadow-md">
+          <h2 class="text-[#0d151c] text-2xl font-bold mb-6">Explore Topics</h2>
+          <div class="flex flex-wrap gap-2">
+            {% for tag in tags %}
+            <a href="/" class="px-4 py-2 bg-[#f8fafc] text-[#49779c] rounded-full hover:bg-[#e7eef4] transition-colors text-sm">#{{ tag }}</a>
+            {% endfor %}
+          </div>
+        </section>
+
+        <!-- <nav id="sticky-nav" class="mb-8 bg-white rounded-xl shadow-md sticky top-0 z-20 transition-all duration-300">
+          <div class="flex items-center justify-between px-4 py-2">
+            <div class="flex space-x-2">
+              <button class="px-3 py-1 text-sm bg-[#2094f3] text-white rounded-full hover:bg-[#1a75c2] transition-colors">All</button>
+              <button class="px-3 py-1 text-sm bg-white text-[#49779c] rounded-full hover:bg-[#e7eef4] transition-colors">Economists</button>
+              <button class="px-3 py-1 text-sm bg-white text-[#49779c] rounded-full hover:bg-[#e7eef4] transition-colors">Insights</button>
+              <button class="px-3 py-1 text-sm bg-white text-[#49779c] rounded-full hover:bg-[#e7eef4] transition-colors">Topics</button>
+            </div>
+            <button id="filter-toggle" class="text-[#49779c] hover:text-[#2094f3] transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="4" y1="21" x2="4" y2="14"></line>
+                <line x1="4" y1="10" x2="4" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12" y2="3"></line>
+                <line x1="20" y1="21" x2="20" y2="16"></line>
+                <line x1="20" y1="12" x2="20" y2="3"></line>
+                <line x1="1" y1="14" x2="7" y2="14"></line>
+                <line x1="9" y1="8" x2="15" y2="8"></line>
+                <line x1="17" y1="16" x2="23" y2="16"></line>
+              </svg>
+            </button>
+          </div>
+        </nav> -->
+
+        <section id="economists" class="mb-12 bg-white rounded-xl p-8 shadow-md">
+          <h2 class="text-[#0d151c] text-2xl font-bold mb-6">Featured Economists</h2>
+          <div class="relative overflow-hidden">
+            <div id="economist-carousel" class="flex transition-transform duration-300 ease-in-out">
+              {% for economist in economists %}
+              <a href="{{ url_for('economist_profile', name=economist.name) }}" class="flex-shrink-0 w-48 mr-4 bg-[#f8fafc] rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer">
+                <img src="{{ economist.image }}" alt="{{ economist.name }}" class="w-full h-48 object-cover">
+                <div class="p-4">
+                  <h3 class="text-[#0d151c] text-lg font-bold mb-1">{{ economist.name }}</h3>
+                  <p class="text-[#49779c] text-sm">{{ economist.specialty }}</p>
+                </div>
+              </a>
+              {% endfor %}
+            </div>
+            <button id="prev-economist" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-red rounded-full p-2 shadow-md z-10">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <button id="next-economist" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md z-10">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </div>
+        </section>
+
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            const carousel = document.getElementById('economist-carousel');
+            const prevButton = document.getElementById('prev-economist');
+            const nextButton = document.getElementById('next-economist');
+            const itemWidth = carousel.querySelector('a').offsetWidth + 16; // Width + margin-right
+            let currentPosition = 0;
+
+            function moveCarousel(direction) {
+              currentPosition += direction * itemWidth;
+              const maxScroll = -(carousel.scrollWidth - carousel.clientWidth);
+              
+              if (currentPosition > 0) {
+                currentPosition = maxScroll;
+              } else if (currentPosition < maxScroll) {
+                currentPosition = 0;
+              }
+
+              carousel.style.transform = `translateX(${currentPosition}px)`;
+            }
+
+            prevButton.addEventListener('click', () => moveCarousel(1));
+            nextButton.addEventListener('click', () => moveCarousel(-1));
+
+            // Infinite scroll effect
+            setInterval(() => {
+              moveCarousel(-1);
+            }, 5000); // Move every 5 seconds
+          });
+        </script>
+
+        <section id="business-insights" class="mb-12 bg-[#f8fafc] rounded-xl p-8 shadow-md">
+          <h2 class="text-[#0d151c] text-2xl font-bold mb-6">Business Management Insights</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {% for resource in business_resources %}
+            <div class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer">
+              <h3 class="text-[#0d151c] text-xl font-bold mb-2">{{ resource.title }}</h3>
+              <p class="text-[#49779c] mb-4">{{ resource.description }}</p>
+              <a href="#" class="text-[#2094f3] font-medium hover:underline">Explore →</a>
+            </div>
+            {% endfor %}
+          </div>
+        </section>
+
+        <section id="featured-course" class="mb-12 bg-[#2094f3] rounded-xl shadow-lg p-8 relative overflow-hidden text-white">
+          <div class="absolute top-0 right-0 bg-[#1a75c2] py-2 px-4 rounded-bl-xl font-medium">Featured Course</div>
+          <h3 class="text-3xl font-bold mb-4">{{ featured_course.title }}</h3>
+          <p class="mb-6 text-lg">{{ featured_course.description }}</p>
+          <a href="{{ featured_course.enrollment_link }}" class="inline-block bg-white text-[#2094f3] font-medium py-3 px-8 rounded-lg hover:bg-[#e7eef4] transition-all duration-300 hover:shadow-md transform hover:-translate-y-1 text-lg">Enroll Now</a>
+        </section>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="fixed bottom-8 right-8">
+  <button id="scroll-to-top" class="bg-[#2094f3] text-white rounded-full p-3 shadow-md hover:bg-[#1a75c2] transition-colors hidden">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+</div>
+
+<script>
+  // Sticky navigation
+  const stickyNav = document.getElementById('sticky-nav');
+  const stickyNavOffset = stickyNav.offsetTop;
+
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > stickyNavOffset) {
+      stickyNav.classList.add('shadow-lg');
+    } else {
+      stickyNav.classList.remove('shadow-lg');
+    }
+  });
+
+  // Category buttons interactivity
+  const categoryButtons = document.querySelectorAll('#sticky-nav button');
+  categoryButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      categoryButtons.forEach(btn => btn.classList.remove('bg-[#2094f3]', 'text-white'));
+      categoryButtons.forEach(btn => btn.classList.add('bg-white', 'text-[#49779c]'));
+      button.classList.remove('bg-white', 'text-[#49779c]');
+      button.classList.add('bg-[#2094f3]', 'text-white');
+    });
+  });
+
+  // Economist carousel
+  const carousel = document.getElementById('economist-carousel');
+  const prevButton = document.getElementById('prev-economist');
+  const nextButton = document.getElementById('next-economist');
+
+  prevButton.addEventListener('click', () => {
+    carousel.scrollBy({ left: -200, behavior: 'smooth' });
+  });
+
+  nextButton.addEventListener('click', () => {
+    carousel.scrollBy({ left: 200, behavior: 'smooth' });
+  });
+
+  // Search suggestions
+  const searchInput = document.getElementById('search-input');
+  const searchSuggestions = document.getElementById('search-suggestions');
+
+  searchInput.addEventListener('input', () => {
+    if (searchInput.value.length > 0) {
+      fetch('/api/search-suggestions')
+        .then(response => response.json())
+        .then(suggestions => {
+          searchSuggestions.innerHTML = suggestions.map(suggestion => 
+            `<div class="p-2 hover:bg-[#f8fafc] cursor-pointer suggestion-item">${suggestion}</div>`
+          ).join('');
+          searchSuggestions.classList.remove('hidden');
+          
+          // Add click event listeners to suggestion items
+          const suggestionItems = document.querySelectorAll('.suggestion-item');
+          suggestionItems.forEach(item => {
+            item.addEventListener('click', () => {
+              searchInput.value = item.textContent;
+              searchSuggestions.classList.add('hidden');
+              // Optionally, you can trigger a search here
+              // performSearch(searchInput.value);
+            });
+          });
+        });
+    } else {
+      searchSuggestions.classList.add('hidden');
+    }
+  });
+
+  // Close search suggestions when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) {
+      searchSuggestions.classList.add('hidden');
+    }
+  });
+
+  // Optionally, add keyboard navigation for the search suggestions
+  searchInput.addEventListener('keydown', (e) => {
+    const items = searchSuggestions.querySelectorAll('.suggestion-item');
+    let index = Array.from(items).findIndex(item => item.classList.contains('bg-[#e7eef4]'));
+    
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (index < items.length - 1) index++;
+      else index = 0;
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (index > 0) index--;
+      else index = items.length - 1;
+    } else if (e.key === 'Enter' && index !== -1) {
+      e.preventDefault();
+      items[index].click();
+      return;
+    } else {
+      return;
+    }
+
+    items.forEach(item => item.classList.remove('bg-[#e7eef4]'));
+    items[index].classList.add('bg-[#e7eef4]');
+  });
+
+  // Scroll to top button
+  const scrollToTopButton = document.getElementById('scroll-to-top');
+
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+      scrollToTopButton.classList.remove('hidden');
+    } else {
+      scrollToTopButton.classList.add('hidden');
+    }
+  });
+
+  scrollToTopButton.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Filter toggle functionality (you can expand this as needed)
+  const filterToggle = document.getElementById('filter-toggle');
+  filterToggle.addEventListener('click', () => {
+    // Add your filter toggle logic here
+    console.log('Filter toggle clicked');
+  });
+</script>
+{% endblock %}
