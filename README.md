@@ -1,6 +1,6 @@
 # Research Write - Academic Research Platform
 
-Research Write is a comprehensive web application designed to assist researchers, students, and academics in writing better research papers, accessing academic resources, and collaborating with peers. 
+Research Write is an Open Source comprehensive web application designed to assist researchers, students, and academics in writing better research papers, accessing academic resources, and collaborating with peers. 
 
 ## Features
 
@@ -32,15 +32,13 @@ Research Write is a comprehensive web application designed to assist researchers
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/research-write.git
+   git clone https://github.com/bnm-AI-dev/AI-Enhanced-Academic-Research-Platfrom.git
    ```
 2. Navigate to the project directory:
-   ```
-   cd research-write
-   ```
+
 3. Install dependencies:
    ```
-   pip install -r requirements.txt
+   pip install -r requirements.txt (coming soon) but please install manually
    ```
 4. Run the application:
    ```
@@ -61,7 +59,7 @@ After starting the application, navigate to `http://localhost:5000` in your web 
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+This is an Open Source Project I am starting out. Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
