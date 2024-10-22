@@ -24,6 +24,11 @@ Research Write is an Open Source comprehensive web application designed to assis
 ![AI Researcg Tools Page](https://github.com/bnm-AI-dev/AI-Enhanced-Academic-Research-Platfrom/blob/main/static/screesnhots/researchTools.png)
 *Caption: Overview of AI-powered research tools and their applications.*
 
+### Edit Paper Tool
+![Edit Paper Page](https://github.com/bnm-AI-dev/AI-Enhanced-Academic-Research-Platfrom/blob/main/static/screesnhots/editPaper.png
+)
+*Caption: Overview of AI-powered real time editing. Functionality currently under implementation.*
+
 ### Featured Journals
 ![Featured Journals Page](https://github.com/bnm-AI-dev/AI-Enhanced-Academic-Research-Platfrom/blob/main/static/screesnhots/researchJournals.png)
 *Caption: Example AI \& Machine Learing Journals*
