@@ -1,5 +1,8 @@
 # Research Write - Academic Research Platform
 
+![Home Page](https://github.com/bnm-AI-dev/AI-Enhanced-Academic-Research-Platfrom/blob/main/static/screesnhots/home.png)
+
+
 Research Write is an Open Source comprehensive web application designed to assist researchers, students, and academics in writing better research papers, accessing academic resources, and collaborating with peers. 
 
 ## Features
